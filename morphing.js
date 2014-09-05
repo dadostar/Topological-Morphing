@@ -5,6 +5,8 @@
 d3.json("data/skips.json", function(err, data) {
 
 
+
+
     var svg = d3.select("body").append("svg")
         .attr("width", 1200)
         .attr("height", 1200);
@@ -14,7 +16,8 @@ d3.json("data/skips.json", function(err, data) {
         .classed("edge", true)
         .attr("d", function(datum) { return datum[0].d; })
         .style("fill-opacity", 0)
-        .style("stroke", "Black");
+        .style("stroke", "Black")
+        .style('stroke-width', '3px');
 
     var nodes = svg.selectAll(".node")
         .data(data.nodes).enter().append("svg:circle")
@@ -37,10 +40,12 @@ d3.json("data/skips.json", function(err, data) {
             .attr("cy", function(d) { return d[index].y; })
             .each("end",function() {d3.select(this).style("fill","Black")});
 
-        if(index < data.ops)
-            setTimeout(function() {
-                animate(index+1, duration);
+        if(index < data.ops) {
+            setTimeout(function () {
+                animate(index + 1, duration);
             }, 3000);
+        }
+
     }
 
 
@@ -64,12 +69,18 @@ d3.json("data/skips.json", function(err, data) {
     };
 
 
+    d3.select("#btplay")
+        .on("click", function() {
+            setTimeout(function() {
+                animate(1, 2000);
+            }, 500);
+            d3.select("#btplay")
+                .attr("disabled", true);
+    })
 
 
 
-    setTimeout(function() {
-        animate(1, 2000);
-    }, 500);
+
 
 
 
